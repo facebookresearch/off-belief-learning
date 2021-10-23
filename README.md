@@ -61,10 +61,10 @@ make -j10
 ## Code Structure
 
 For an overview of how the training infrastructure, please refer to Figure 5 of the
-[Off-Belief Learning] (https://arxiv.org/pdf/2103.04000.pdf) paper.
+[Off-Belief Learning](https://arxiv.org/pdf/2103.04000.pdf) paper.
 
 `hanabi-learning-environment` is a modified version of the original
-[HLE from Deepmind] (https://github.com/deepmind/hanabi-learning-environment).
+[HLE from Deepmind](https://github.com/deepmind/hanabi-learning-environment).
 
 Notable modifications includes:
 
