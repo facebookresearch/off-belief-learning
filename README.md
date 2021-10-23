@@ -13,7 +13,7 @@ not tested it extensively under different configurations. We also use
 conda/miniconda to manage environments.
 
 There are known issues when using this repo with newer versions
-of pytorch, such as this [illegal move issue] (https://github.com/facebookresearch/hanabi_SAD/issues/20#issue-848431066).
+of pytorch, such as this [illegal move issue](https://github.com/facebookresearch/hanabi_SAD/issues/20#issue-848431066).
 
 ```shell
 conda create -n hanabi python=3.7
