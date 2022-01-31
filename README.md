@@ -8,8 +8,10 @@ in [Off-Belief Learning, ICML 2021](https://arxiv.org/pdf/2103.04000.pdf).
 ## Environment Setup
 
 We have been using `pytorch-1.5.1`, `cuda-10.1`, and `cudnn-v7.6.5` in
-our development environment. Other settings may also work but we have
-not tested it extensively under different configurations. We also use
+our development environment. We have not tested it extensively in
+other environment configurations but it may also work. You will need
+to change the pybind submodule to the same version as the one used by
+your pytorch, which is detailed in later section. We also use
 conda/miniconda to manage environments.
 
 There are known issues when using this repo with newer versions
@@ -60,8 +62,8 @@ make -j10
 
 ## Code Structure
 
-For an overview of how the training infrastructure, please refer to Figure 5 of the
-[Off-Belief Learning](https://arxiv.org/pdf/2103.04000.pdf) paper.
+For an overview of the training infrastructure, please refer to Figure 5 of the
+[Off-Belief Learning] (https://arxiv.org/pdf/2103.04000.pdf) paper.
 
 `hanabi-learning-environment` is a modified version of the original
 [HLE from Deepmind](https://github.com/deepmind/hanabi-learning-environment).
