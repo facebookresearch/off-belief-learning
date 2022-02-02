@@ -187,20 +187,19 @@ class R2D2Agent(torch.jit.ScriptModule):
             greedy_action, new_hid = self.greedy_act(priv_s, publ_s, legal_move, hid)
             reply = {}
 
-        random_action = legal_move.multinomial(1).squeeze(1)
-        rand = torch.rand(greedy_action.size(), device=greedy_action.device)
-        assert rand.size() == eps.size()
-        rand = (rand < eps).long()
-
         if self.greedy:
             action = greedy_action
         else:
+            random_action = legal_move.multinomial(1).squeeze(1)
+            rand = torch.rand(greedy_action.size(), device=greedy_action.device)
+            assert rand.size() == eps.size()
+            rand = (rand < eps).float()
             action = (greedy_action * (1 - rand) + random_action * rand).detach().long()
 
         if self.vdn:
             action = action.view(bsize, num_player)
             greedy_action = greedy_action.view(bsize, num_player)
-            rand = rand.view(bsize, num_player)
+            # rand = rand.view(bsize, num_player)
 
         reply["a"] = action.detach().cpu()
         reply["h0"] = new_hid["h0"].detach().cpu()

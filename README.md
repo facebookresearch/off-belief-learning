@@ -14,15 +14,12 @@ to change the pybind submodule to the same version as the one used by
 your pytorch, which is detailed in later section. We also use
 conda/miniconda to manage environments.
 
-There are known issues when using this repo with newer versions
-of pytorch, such as this [illegal move issue](https://github.com/facebookresearch/hanabi_SAD/issues/20#issue-848431066).
-
 ```shell
 conda create -n hanabi python=3.7
 conda activate hanabi
 
-# install pytorch 1.5.1
-# note that newer versions may cause compilation issues
+# install pytorch
+# the code was developed with pytorch 1.5.1, but newer versions may also work
 pip install torch==1.5.1+cu101 torchvision==0.6.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
 
 # install other dependencies
@@ -48,6 +45,15 @@ export LD_LIBRARY_PATH=${CONDA_PREFIX}/lib:${LD_LIBRARY_PATH}
 
 # avoid tensor operation using all cpu cores
 export OMP_NUM_THREADS=1
+```
+
+If you use a *newer version of pytorch* (e.g. >= v1.9), first check
+out the pybind module to use the corresponding version (the
+version can be found at pybind11 row [here](https://github.com/pytorch/pytorch/tree/master/third_party)):
+```
+cd third_party/pybind11
+git checkout v2.6.2
+cd ../..
 ```
 
 Finally, to compile this repo:
