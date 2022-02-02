@@ -1,20 +1,18 @@
 # hanabi-live-bot
 
 The code here allows to host bot on a customized version of hanabi.live
-so that researchers can play with their bot for evaluation/fun!
+so that researchers can play with their AI bots for evaluation/fun!
 
 The [customized platform](https://hanabi.marl-human-ai.com/) has
-hacks to allow the bot to reconstrucut the game state with the game
+hacks to allow the bot to reconstruct the full game state using the game
 engine from Hanabi-Learning-Environment (HLE), the simulator widely
 used for human-AI/multi-agent research on the Hanabi benchmark.
 Please kindly *only* use this for human-AI evaluation and use the
-original [hanabi.live]( https://hanab.live/) to other leisure games.
+original [hanabi.live](https://hanab.live/) to other leisure games.
 
 This is based on an example [reference
 bot](https://github.com/Zamiell/hanabi-live-bot) from one of the main
 maintainer/contributor of hanabi.live online platform.
-
-<br />
 
 ### Setup Instructions
 
