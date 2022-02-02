@@ -217,7 +217,9 @@ PYBIND11_MODULE(hanalearn, m) {
       .def("score", &HanabiState::Score)
       .def("max_possible_score", &HanabiState::MaxPossibleScore)
       .def("info_tokens", &HanabiState::InformationTokens)
-      .def("to_string", &HanabiState::ToString);
+      .def("life_tokens", &HanabiState::LifeTokens)
+      .def("to_string", &HanabiState::ToString)
+      .def("is_terminal", &HanabiState::IsTerminal);
 
   py::enum_<HanabiMove::Type>(m, "MoveType")
       .value("Invalid", HanabiMove::Type::kInvalid)
