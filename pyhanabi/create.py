@@ -43,6 +43,14 @@ def create_envs(
     return games
 
 
+def flatten(s):
+    if s == []:
+        return s
+    if isinstance(s[0], list):
+        return flatten(s[0]) + flatten(s[1:])
+    return s[:1] + flatten(s[1:])
+
+
 def create_threads(num_thread, num_game_per_thread, actors, games):
     context = rela.Context()
     threads = []
@@ -55,6 +63,6 @@ def create_threads(num_thread, num_game_per_thread, actors, games):
         context.push_thread_loop(thread)
     print(
         "Finished creating %d threads with %d games and %d actors"
-        % (len(threads), len(games), len(actors))
+        % (len(threads), len(games), len(flatten(actors)))
     )
     return context, threads

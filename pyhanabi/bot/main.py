@@ -6,7 +6,7 @@ from bot_factory import BotFactory
 
 
 # Authenticate, login to the Hanabi Live WebSocket server, and run forever
-def main(username, password, agent):
+def main(username, password, agent, auto_reconnect):
     use_localhost = False
 
     # Get an authenticated cookie by POSTing to the login handler
@@ -47,18 +47,19 @@ def main(username, password, agent):
         print(resp.headers)
         sys.exit(1)
 
-    HanabiClient(ws_url, cookie, agent)
+    HanabiClient(ws_url, cookie, agent, auto_reconnect)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="")
-
     parser.add_argument("--name", type=str, default="Bot-BR")
     parser.add_argument("--login_name", type=str, default=None)
     parser.add_argument("--password", type=str, default=None)
+    parser.add_argument("--auto_reconnect", type=int, default=0)
     args = parser.parse_args()
+
     if args.login_name is None:
         args.login_name = args.name
 
     agent = BotFactory[args.name]()
-    main(args.login_name, args.password, agent)
+    main(args.login_name, args.password, agent, args.auto_reconnect)

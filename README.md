@@ -15,21 +15,13 @@ preventing us from using newer pytorch version. Check the Environment Setup
 for more detail.
 
 ## Environment Setup
-
-We have been using `pytorch-1.5.1`, `cuda-10.1`, and `cudnn-v7.6.5` in
-our development environment. We have not tested it extensively in
-other environment configurations but it may also work. You will need
-to change the pybind submodule to the same version as the one used by
-your pytorch, which is detailed in later section. We also use
-conda/miniconda to manage environments.
+We use conda/miniconda to manage environments.
 
 ```shell
 conda create -n hanabi python=3.7
 conda activate hanabi
 
-# install pytorch
-# the code was developed with pytorch 1.5.1, but newer versions may also work
-pip install torch==1.5.1+cu101 torchvision==0.6.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+pip install torch torchvision torchaudio
 
 # install other dependencies
 pip install psutil
@@ -56,7 +48,7 @@ export LD_LIBRARY_PATH=${CONDA_PREFIX}/lib:${LD_LIBRARY_PATH}
 export OMP_NUM_THREADS=1
 ```
 
-If you use a *newer version of pytorch* (e.g. >= v1.9), first check
+If you use a *newer version of pytorch*, first check
 out the pybind module to use the corresponding version (the
 version can be found at pybind11 row [here](https://github.com/pytorch/pytorch/tree/master/third_party)):
 ```

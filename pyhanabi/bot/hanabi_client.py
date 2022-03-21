@@ -1,6 +1,6 @@
 import json
 import time
-
+import gc
 import websocket
 import torch
 import numpy as np
@@ -9,7 +9,7 @@ from game_state import HleGameState
 
 
 class HanabiClient:
-    def __init__(self, url, cookie, agent):
+    def __init__(self, url, cookie, agent, auto_reconnect):
         # Initialize all class variables
         self.commandHandlers = {}
         self.tables = {}
@@ -43,15 +43,19 @@ class HanabiClient:
         # Start the WebSocket client
         print('Connecting to "' + url + '".')
 
-        self.ws = websocket.WebSocketApp(
-            url,
-            on_message=lambda ws, message: self.websocket_message(ws, message),
-            on_error=lambda ws, error: self.websocket_error(ws, error),
-            on_open=lambda ws: self.websocket_open(ws),
-            on_close=lambda ws: self.websocket_close(ws),
-            cookie=cookie,
-        )
-        self.ws.run_forever()
+        while True:
+            self.ws = websocket.WebSocketApp(
+                url,
+                on_message=lambda ws, message: self.websocket_message(ws, message),
+                on_error=lambda ws, error: self.websocket_error(ws, error),
+                on_open=lambda ws: self.websocket_open(ws),
+                on_close=lambda ws: self.websocket_close(ws),
+                cookie=cookie,
+            )
+            self.ws.run_forever()
+            if not auto_reconnect:
+                break
+            gc.collect()
 
     # ------------------
     # WebSocket Handlers
@@ -86,6 +90,9 @@ class HanabiClient:
             pass
 
     def websocket_error(self, ws, error):
+        if isinstance(error, KeyboardInterrupt):
+            raise error
+
         print('Encountered a WebSocket error:', error)
 
     def websocket_close(self, ws):
