@@ -16,6 +16,8 @@
 #include "rlcc/clone_data_generator.h"
 #include "rlcc/hanabi_env.h"
 #include "rlcc/thread_loop.h"
+#include "searchcc/sparta.h"
+#include "searchcc/rl_search.h"
 
 namespace py = pybind11;
 using namespace hanabi_learning_env;
@@ -113,6 +115,58 @@ PYBIND11_MODULE(hanalearn, m) {
            std::vector<std::shared_ptr<HanabiEnv>>,
            std::vector<std::vector<std::shared_ptr<R2D2Actor>>>,
            bool>());
+
+  // bind search related stuff
+  py::class_<search::GameSimulator, std::shared_ptr<search::GameSimulator>>(
+      m, "GameSimulator")
+      .def(py::init<const std::unordered_map<std::string, std::string>&>())
+      .def("step", &search::GameSimulator::step)
+      .def("get_move", &search::GameSimulator::getMove)
+      .def("state", &search::GameSimulator::state)
+      .def("terminal", &search::GameSimulator::terminal)
+      .def("get_score", &search::GameSimulator::score);
+
+  py::class_<search::SpartaActor, std::shared_ptr<search::SpartaActor>>(
+      m, "SpartaActor")
+      .def(py::init<int, std::shared_ptr<rela::BatchRunner>, int>())
+      .def("set_partners", &search::SpartaActor::setPartners)
+      .def("update_belief", &search::SpartaActor::updateBelief)
+      .def("observe", &search::SpartaActor::observe)
+      .def("decide_action",  &search::SpartaActor::decideAction)
+      .def("sparta_search",  &search::SpartaActor::spartaSearch);
+
+  py::class_<search::RLSearchActor, std::shared_ptr<search::RLSearchActor>>(
+      m, "RLSearchActor")
+      .def(py::init<
+           int,
+           std::shared_ptr<rela::BatchRunner>,
+           std::shared_ptr<rela::BatchRunner>,
+           std::shared_ptr<rela::BatchRunner>,
+           int,
+           bool,
+           bool,
+           const std::vector<float>&,
+           int,
+           float,
+           int>())
+      .def("set_compute_config", &search::RLSearchActor::setComputeConfig)
+      .def("set_partner", &search::RLSearchActor::setPartner)
+      .def("update_belief", &search::RLSearchActor::updateBelief)
+      .def("update_belief_hid", &search::RLSearchActor::updateBeliefHid)
+      .def("observe", &search::RLSearchActor::observe)
+      .def("decide_action", &search::RLSearchActor::decideAction)
+      .def("reset_rl_rnn", &search::RLSearchActor::resetRlRnn)
+      .def("set_use_rl", &search::RLSearchActor::setUseRL)
+      .def("using_rl", &search::RLSearchActor::usingRL)
+      .def("run_sim_games", &search::RLSearchActor::runSimGames)
+      .def("start_data_generation", &search::RLSearchActor::startDataGeneration)
+      .def("sample_hands", &search::RLSearchActor::sampleHands)
+      .def("get_belief_hidden", &search::RLSearchActor::getBeliefHidden)
+      .def("get_model_belief_hidden", &search::RLSearchActor::getModelBeliefHidden)
+      .def("stop_data_generation", &search::RLSearchActor::stopDataGeneration)
+      .def("sparta_search", &search::RLSearchActor::spartaSearch);
+
+  // m.def("observe_for_search", &observeForSearch);
 
   // bind some hanabi util classes
   py::class_<HanabiCard>(m, "HanabiCard")

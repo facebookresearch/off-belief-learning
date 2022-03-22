@@ -63,11 +63,12 @@ class CanonicalObservationEncoder : public ObservationEncoder {
       const std::vector<int>& color_permute) const;
 
   std::tuple<std::vector<float>, std::vector<int>>
-  EncodePrivateV0Belief(
+  EncodeV0Belief(
       const HanabiObservation& obs,
       const std::vector<int>& order,
       bool shuffle_color,
-      const std::vector<int>& color_permute) const;
+      const std::vector<int>& color_permute,
+      bool publ) const;
 
   std::vector<float> EncodeARV0Belief(
     const HanabiObservation& obs,

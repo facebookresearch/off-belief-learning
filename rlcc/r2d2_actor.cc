@@ -220,7 +220,7 @@ void R2D2Actor::observeBeforeAct(const HanabiEnv& env) {
     auto obs = hle::HanabiObservation(state, state.CurPlayer(), true);
     auto encoder = hle::CanonicalObservationEncoder(&game);
     auto [privV0, cardCount] =
-        encoder.EncodePrivateV0Belief(obs, std::vector<int>(), false, std::vector<int>());
+        encoder.EncodeV0Belief(obs, std::vector<int>(), false, std::vector<int>(), false);
     perCardPrivV0_ =
         extractPerCardBelief(privV0, env.getHleGame(), obs.Hands()[0].Cards().size());
   }

@@ -46,8 +46,7 @@ rela::TensorDict observe(
 
   std::vector<float> vS = encoder.Encode(
       obs,
-      true,  // regardless of the flag, splitPrivatePulic/convertSad will mask out this
-             // field
+      true,  // splitPrivatePulic/convertSad will mask out private hand
       std::vector<int>(),  // shuffle card
       shuffleColor,
       colorPermute,
@@ -108,7 +107,8 @@ std::tuple<rela::TensorDict, std::vector<int>, std::vector<float>> beliefModelOb
     bool shuffleColor,
     const std::vector<int>& colorPermute,
     const std::vector<int>& invColorPermute,
-    bool hideAction) {
+    bool hideAction,
+    bool publ) {
   const auto& game = *(state.ParentGame());
   auto obs = hle::HanabiObservation(state, playerIdx, true);
   auto encoder = hle::CanonicalObservationEncoder(&game);
@@ -122,11 +122,37 @@ std::tuple<rela::TensorDict, std::vector<int>, std::vector<float>> beliefModelOb
       invColorPermute,
       hideAction);
   rela::TensorDict feat = splitPrivatePublic(vS, game);
-  auto [v0, privCardCount] =
-      encoder.EncodePrivateV0Belief(obs, std::vector<int>(), shuffleColor, colorPermute);
+  auto [v0, cardCount] = encoder.EncodeV0Belief(
+      obs, std::vector<int>(), shuffleColor, colorPermute, publ);
   feat["v0"] = torch::tensor(v0);
-  return {feat, privCardCount, v0};
+  return {feat, cardCount, v0};
 }
+
+// std::tuple<rela::TensorDict, std::vector<int>, std::vector<float>> beliefModelObserve(
+//     const hle::HanabiState& state,
+//     int playerIdx,
+//     bool shuffleColor,
+//     const std::vector<int>& colorPermute,
+//     const std::vector<int>& invColorPermute,
+//     bool hideAction) {
+//   const auto& game = *(state.ParentGame());
+//   auto obs = hle::HanabiObservation(state, playerIdx, true);
+//   auto encoder = hle::CanonicalObservationEncoder(&game);
+
+//   std::vector<float> vS = encoder.Encode(
+//       obs,
+//       true,
+//       std::vector<int>(),  // shuffle card
+//       shuffleColor,
+//       colorPermute,
+//       invColorPermute,
+//       hideAction);
+//   rela::TensorDict feat = splitPrivatePublic(vS, game);
+//   auto [v0, privCardCount] =
+//       encoder.EncodePrivateV0Belief(obs, std::vector<int>(), shuffleColor, colorPermute);
+//   feat["v0"] = torch::tensor(v0);
+//   return {feat, privCardCount, v0};
+// }
 
 rela::TensorDict applyModel(
     const rela::TensorDict& obs,
