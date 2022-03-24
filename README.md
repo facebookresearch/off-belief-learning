@@ -6,9 +6,21 @@ This repo contains the implementation of the algorithm proposed
 in [Off-Belief Learning, ICML 2021](https://arxiv.org/pdf/2103.04000.pdf).
 
 ## Update
+[Mar 2022] We added the code for test time [RL search,
+NeurIPS 2021](https://arxiv.org/pdf/2109.15316.pdf) and test time
+[Belief Fine-tuning,
+ICLR 2022](https://openreview.net/pdf?id=ckZY7DGa7FQ) to this repo as
+they were built on the same policy and belief training infrastructure
+as off-belief learning. Check out `pyhanabi/rl_search.py` for the main
+entry point of the algorithm and `searchcc/` for the backend code that
+implements search. Meanwhile, we included a simple single agent search
+baseline originally proposed in [SPARTA, AAAI
+2020](https://arxiv.org/abs/1912.02318), which can be accessed by
+running `pyhanabi/sparta.py`. Check `pyhanabi/README` for more detailed
+instructions.
 
 [Fed 2022] We added new code in `pyhanabi/bot` to facilitate playing with
-the bot online. Checkout the README in that folder for more detail.
+the bot online. Checkout the `pyhanabi/bot/README` for more details.
 
 [Fed 2022] We fixed a major pybind compatibility problem that has been
 preventing us from using newer pytorch version. Check the Environment Setup

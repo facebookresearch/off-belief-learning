@@ -113,3 +113,15 @@ The final lines of the output are:
 The first line means there are 5 groups with 1 model (i.e. selfplay)
 and the second line means that there are 10 (5 choose 2) groups of 2
 model (crossplay).
+
+### Test time policy improvement with Sparta or RL Search
+
+To run sparta on one of the provided OBL agents:
+```
+python sparta.py --weight_file ../models/icml_OBL1/OFF_BELIEF1_SHUFFLE_COLOR0_BZA0_BELIEF_a/model0.pthw
+```
+
+To run RL search with exact belief (This simplified command may use different hyperparameters from the orignal paper):
+```
+python rl_search.py --weight_file ../models/icml_OBL1/OFF_BELIEF1_SHUFFLE_COLOR0_BZA0_BELIEF_a/model0.pthw --num_hint 8
+```
