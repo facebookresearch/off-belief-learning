@@ -19,10 +19,10 @@ baseline originally proposed in [SPARTA, AAAI
 running `pyhanabi/sparta.py`. Check `pyhanabi/README` for more detailed
 instructions.
 
-[Fed 2022] We added new code in `pyhanabi/bot` to facilitate playing with
+[Feb 2022] We added new code in `pyhanabi/bot` to facilitate playing with
 the bot online. Checkout the `pyhanabi/bot/README` for more details.
 
-[Fed 2022] We fixed a major pybind compatibility problem that has been
+[Feb 2022] We fixed a major pybind compatibility problem that has been
 preventing us from using newer pytorch version. Check the Environment Setup
 for more detail.
 
