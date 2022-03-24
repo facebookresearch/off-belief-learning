@@ -60,12 +60,14 @@ export LD_LIBRARY_PATH=${CONDA_PREFIX}/lib:${LD_LIBRARY_PATH}
 export OMP_NUM_THREADS=1
 ```
 
-If you use a *newer version of pytorch*, first check
-out the pybind module to use the corresponding version (the
-version can be found at pybind11 row [here](https://github.com/pytorch/pytorch/tree/master/third_party)):
+The pybind here works with the pytorch1.10, the latest at the time of writing.
+If you use a *newer version of pytorch* that uses a different version
+of pybind, first check out the pybind module to use the corresponding
+version (the version can be found at pybind11 row
+[here](https://github.com/pytorch/pytorch/tree/master/third_party)):
 ```
 cd third_party/pybind11
-git checkout v2.6.2
+git checkout $VERSION.XXX
 cd ../..
 ```
 
