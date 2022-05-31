@@ -33,7 +33,7 @@ We use conda/miniconda to manage environments.
 conda create -n hanabi python=3.7
 conda activate hanabi
 
-pip install torch torchvision torchaudio
+pip install torch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1
 
 # install other dependencies
 pip install psutil
