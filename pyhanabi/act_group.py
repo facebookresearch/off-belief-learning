@@ -177,9 +177,13 @@ class BRActGroup:
 
         self.coop_model_runners = []
         if coop_agents is not None:
-            make_model_runners(coop_agents, self.devices, self.coop_model_runners, methods)
+            make_model_runners(
+                coop_agents, self.devices, self.coop_model_runners, methods
+            )
         self.num_coop_runners = len(self.coop_model_runners)
-        print (f"Making a best response with: {self.num_coop_runners} independent cooperative agents")
+        print(
+            f"Making a best response with: {self.num_coop_runners} independent cooperative agents"
+        )
 
         self.actors = []
         for i in range(num_thread):
@@ -193,11 +197,13 @@ class BRActGroup:
                         player_buffer = replay_buffer
                     else:
                         if self.coop_model_runners:
-                            cur_model = self.coop_model_runners[j % self.num_coop_runners]
-                            cur_explore_eps = [0.]
+                            cur_model = self.coop_model_runners[
+                                j % self.num_coop_runners
+                            ]
+                            cur_explore_eps = [0.0]
                         else:
                             cur_model = self.model_runners[i % self.num_runners]
-                            cur_explore_eps = [1.]
+                            cur_explore_eps = [1.0]
                         player_buffer = None
                     actor = hanalearn.R2D2Actor(
                         cur_model,

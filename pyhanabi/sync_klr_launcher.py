@@ -80,6 +80,7 @@ default_policy_config = {
     "mode": "klr",
 }
 
+
 def get_savedir_for_levels(save_dir, num_level):
     policy_dirs = []
     for i in range(num_level):
@@ -94,6 +95,7 @@ def config_to_flags(config):
         flags.append(v)
     return flags
 
+
 def write_command_to_file(filename, command):
     first_line = " ".join(command[:3])
     first_line += " \\"
@@ -101,8 +103,10 @@ def write_command_to_file(filename, command):
     lines = [first_line]
     assert len(command) % 2 == 0
     for i in range(0, len(command), 2):
-        print (i, command[i])
-        if command[i] == "--coop_agents" and (command[i+1] is None or len(command[i + 1]) == 0):
+        print(i, command[i])
+        if command[i] == "--coop_agents" and (
+            command[i + 1] is None or len(command[i + 1]) == 0
+        ):
             continue
         line = f"\t{command[i]} {command[i+1]} \\"
         lines.append(line)
@@ -166,12 +170,12 @@ for i in range(args.num_level):
 
     coop_agents = []
     if i > 0:
-        coop_agents = [policy_dirs[i-1]]
+        coop_agents = [policy_dirs[i - 1]]
         config["coop_agents"] = " ".join(coop_agents)
 
     if (not args.local or args.gpu8) and (coop_agents):
         coop_devices = ["cuda:1"]
-#        coop_devices += [f"cuda:{2+i}" for i in range(len(coop_agents))]
+        #        coop_devices += [f"cuda:{2+i}" for i in range(len(coop_agents))]
         config["act_device"] = ",".join(coop_devices)
         num_device += len(coop_devices)
 
