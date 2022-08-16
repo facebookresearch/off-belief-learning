@@ -344,3 +344,41 @@ def generate_log_uniform(min_val, max_val, n):
     uni = np.linspace(log_min, log_max, n)
     uni_exp = np.exp(uni)
     return uni_exp.tolist()
+
+
+def save_intermediate_model(state_dict, ckpt):
+    ckpt.save(state_dict)
+
+
+def update_intermediate_policy(policy_ckpt, act_group, overwrites={}, device="cpu"):
+    overwrites.update({"device": device})
+    policy_pth = policy_ckpt.get_last_version()
+    agent, _ = load_agent(policy_pth, overwrites)
+    act_group.update_model(agent)
+
+
+def update_intermediate_coop_agents(coop_ckpts, act_group, overwrites={}, device="cpu"):
+    overwrites.update({"device": device})
+    coop_agents = load_coop_agents(coop_ckpts, overwrites, device)
+    act_group.update_coop_models(coop_agents)
+
+
+def load_coop_agents(coop_ckpts, overwrites={}, device="cpu", num_retries=10):
+    overwrites.update({"device": device})
+    coop_agents = []
+    for coop_ckpt in coop_ckpts:
+        coop_pth = coop_ckpt.get_last_version()
+        num_tries = 0
+        while num_tries < num_retries:
+            num_tries += 1
+            try:
+                coop_agent, _ = load_agent(coop_pth, overwrites)
+                coop_agents.append(coop_agent)
+                break
+            except Exception as e:
+                # This should just be a loading error, e.g. in case
+                # the agent fails to load e.g. another node tried to write
+                # to the file it was trying to read
+                print(f"loading coop error is: {e} at num tries: {num_tries}")
+                time.sleep(5)
+    return coop_agents
