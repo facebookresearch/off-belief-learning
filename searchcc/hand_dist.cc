@@ -389,5 +389,4 @@ void updateBelief(
 
   handDist.computeCdf();
 }
-
 }  // namespace search

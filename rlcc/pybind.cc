@@ -18,6 +18,7 @@
 #include "rlcc/thread_loop.h"
 #include "searchcc/sparta.h"
 #include "searchcc/rl_search.h"
+#include "searchcc/finesse.h"
 
 namespace py = pybind11;
 using namespace hanabi_learning_env;
@@ -345,4 +346,12 @@ PYBIND11_MODULE(hanalearn, m) {
       .def(py::init<const HanabiGame*>())
       .def("shape", &CanonicalObservationEncoder::Shape)
       .def("encode", &CanonicalObservationEncoder::Encode);
+
+  py::class_<search::FinesseActor, std::shared_ptr<search::FinesseActor>>(m, "FinesseActor")
+      .def(py::init<int, std::vector<std::shared_ptr<rela::BatchRunner>>, int>())
+      .def("set_partners", &search::FinesseActor::setPartners)
+      .def("update_belief", &search::FinesseActor::updateBelief)
+      .def("finesse", &search::FinesseActor::finesse)
+      .def("observe", &search::FinesseActor::observe)
+      .def("decide_action", &search::FinesseActor::decideAction);
 }
