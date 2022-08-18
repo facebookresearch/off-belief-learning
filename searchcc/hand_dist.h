@@ -98,4 +98,6 @@ void updateBelief(
     int numThread,
     bool skipCounterfactual = false);
 
+HandDistribution publicToPrivate(
+    const HandDistribution& handDist, const std::vector<int> cardCount);
 }  // namespace search

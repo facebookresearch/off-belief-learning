@@ -16,4 +16,5 @@ BotFactory = {
     "Bot-OBL2": lambda : RLAgent(os.path.join(model_root, "icml_OBL2/OFF_BELIEF1_SHUFFLE_COLOR0_LOAD1_BZA0_BELIEF_a/model0.pthw"), {}),
     "Bot-OBL3": lambda : RLAgent(os.path.join(model_root, "icml_OBL3/OFF_BELIEF1_SHUFFLE_COLOR0_LOAD1_BZA0_BELIEF_a/model0.pthw"), {}),
     "Bot-OBL4": lambda : RLAgent(os.path.join(model_root, "icml_OBL4/OFF_BELIEF1_SHUFFLE_COLOR0_LOAD1_BZA0_BELIEF_a/model0.pthw"), {}),
+    "Bot-PPO": lambda : RLAgent("/checkpoint/hengyuan/hanabi_ppo/dev_ppo_multistep/METHODppo_MULTI_STEP1_BUFFER_SIZE1024_SEEDa/model0.pthw", {}),
 }
